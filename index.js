@@ -5,6 +5,11 @@ const app = express();
 
 dotenv.config();
 
+
+app.get("/",(req,res)=>{
+    res.send("Hello world");
+})
+
 const port = process.env.PORT || 5000 
 const server = http.createServer(app);
 
