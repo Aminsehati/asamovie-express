@@ -7,7 +7,9 @@ dotenv.config();
 
 
 app.get("/",(req,res)=>{
-    res.send("Hello world");
+    res.json({
+        isSuccess:false,
+    })
 })
 
 const port = process.env.PORT || 5000 
