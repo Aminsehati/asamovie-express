@@ -1,7 +1,10 @@
 const jwt = require("jsonwebtoken");
 class jwtService {
-  sign(payload, expierd = "864000s", secret) {
-    return jwt.sign(payload, process.env.SECRET_JWT, { expiresIn: expierd });
+  sign(payload, expierd = "864000s", secret = process.env.SECRET_JWT) {
+    return jwt.sign(payload, secret, { expiresIn: expierd });
+  }
+  verifyToken(token) {
+    return jwt.verify(token, process.env.SECRET_JWT);
   }
 }
 module.exports = new jwtService();

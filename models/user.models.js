@@ -9,7 +9,7 @@ const userSchema = new Schema({
         type:String,
         default:""
     },
-    firstname:{
+    firstName:{
         type:String,
         default:""
     },
