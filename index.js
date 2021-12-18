@@ -3,10 +3,13 @@ const http = require("http");
 const dotenv = require("dotenv");
 const app = express();
 const database = require("./config/database");
+const cors = require('cors');
 database();
-cors({
-    origin: ["http://localhost*"]
-})
+var corsOptions = {
+    origin: ['https://localhost:3000','https://localhost:5000'],
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 
 dotenv.config();
 
