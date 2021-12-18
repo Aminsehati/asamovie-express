@@ -4,16 +4,22 @@ const dotenv = require("dotenv");
 const app = express();
 const database = require("./config/database");
 database();
-app.use(cors())
+cors({
+    origin: ["http://localhost*"]
+})
 
 dotenv.config();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 
 const routes = require("./routes");
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 routes(app);
 
 const port = process.env.PORT || 5000;
