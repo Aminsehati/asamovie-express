@@ -3,13 +3,11 @@ const http = require("http");
 const dotenv = require("dotenv");
 const app = express();
 const database = require("./config/database");
+const path = require('path');
 const cors = require('cors');
 database();
-var corsOptions = {
-    origin: ['https://localhost:3000','https://localhost:5000'],
-    optionsSuccessStatus: 200
-}
-app.use(cors(corsOptions))
+
+app.use(cors())
 
 dotenv.config();
 
@@ -17,12 +15,12 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-
 const routes = require("./routes");
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+app.use("/uploads", express.static("uploads"))
 routes(app);
 
 const port = process.env.PORT || 5000;

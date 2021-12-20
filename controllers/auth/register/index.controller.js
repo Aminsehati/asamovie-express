@@ -7,13 +7,13 @@ class registerController {
     const { phone, password } = req.body;
     const phoneValidation = validation.phone(phone);
     if (!phone | !password) {
-      return res.send({
+      return res.status(400).send({
         isSuccess: false,
         message: "تمامی فیلدها اجباری میباشد",
       });
     }
     if (!phoneValidation) {
-      return res.send({
+      return res.status(400).send({
         isSuccess: false,
         message: "شماره وارد شده صحیح نمیباشد",
       });
@@ -21,13 +21,13 @@ class registerController {
     try {
       const user = await User.findOne({ phone });
       if (user) {
-        return res.send({
+        return res.status(400).send({
           isSuccess: false,
           message: "شماره وارد شده تکراری میباشد",
         });
       }
     } catch (error) {
-      return res.send({
+      return res.status(400).send({
         isSuccess: false,
         message: error,
       });
@@ -45,7 +45,7 @@ class registerController {
         token,
       });
     } catch (error) {
-      return res.send({
+      return res.status(400).send({
         isSuccess: false,
         message: error + "error",
       });

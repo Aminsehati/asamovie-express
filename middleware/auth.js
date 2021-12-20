@@ -18,7 +18,8 @@ module.exports = async (req, res, next) => {
         phone:user.phone,
         firstName : user?.firstName ,
         lastName : user?.lastName,
-        _id : user?._id
+        _id : user?._id ,
+        imageUrl:user?.imageUrl
     }
     next();
   } catch (error) {

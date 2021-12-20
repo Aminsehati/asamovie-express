@@ -1,2 +1,3 @@
-const crypto = require('crypto');
-console.log(crypto.randomBytes(24).toString('hex'));
+const crypto = require('crypto')
+const otp = crypto.randomInt(999,9999)
+console.log(otp);

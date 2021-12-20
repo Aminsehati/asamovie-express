@@ -4,7 +4,7 @@ const url =
 module.exports = () => {
   mongoose.connect(url, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true 
   });
   mongoose.connection.on("error", (err) => {
     console.log("err", err);
