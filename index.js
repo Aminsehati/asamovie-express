@@ -3,7 +3,8 @@ const http = require("http");
 const dotenv = require("dotenv");
 const app = express();
 const database = require("./config/database");
-const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.yaml');
 const cors = require('cors');
 database();
 
@@ -20,6 +21,10 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 app.use("/uploads", express.static("uploads"))
 routes(app);
 

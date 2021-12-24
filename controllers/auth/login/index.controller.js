@@ -3,7 +3,10 @@ const hashService = require("../../../services/hash-services");
 const jwtService = require("../../../services/jwt-services");
 class loginController {
   async login(req, res) {
-    const { phone, password } = req.body;
+    let {
+      phone,
+      password
+    } = req.query;
     if (!phone | !password) {
       return res.status(400).json({
         isSuccess: false,
@@ -11,7 +14,9 @@ class loginController {
       });
     }
     try {
-      const user = await User.findOne({ phone });
+      const user = await User.findOne({
+        phone
+      });
       if (!user) {
         return res.status(400).json({
           isSuccess: false,
@@ -28,7 +33,9 @@ class loginController {
           message: "شماره وارد شده یا رمزعبور اشتباه میباشد",
         });
       }
-      const token = await jwtService.sign({ _id: user._id });
+      const token = await jwtService.sign({
+        _id: user._id
+      });
       res.json({
         isSuccess: true,
         token,
@@ -37,6 +44,7 @@ class loginController {
       return res.status(400).json({
         isSuccess: false,
         message: "خطایی رخ داده است",
+        error
       });
     }
   }
