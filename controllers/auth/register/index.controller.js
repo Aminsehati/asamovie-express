@@ -4,9 +4,11 @@ const hashServices = require("../../../services/hash-services");
 const jwtServices = require("../../../services/jwt-services");
 class registerController {
   async register(req, res) {
-    const { phone, password } = req.body;
+    let { phone, password } = req.query ;
+    phone = req.body;
+    password = req.body;
     const phoneValidation = validation.phone(phone);
-    if (!phone | !password) {
+    if (!phone || !password) {
       return res.status(400).send({
         isSuccess: false,
         message: "تمامی فیلدها اجباری میباشد",
