@@ -23,7 +23,7 @@ app.use(express.urlencoded({
 app.use("/uploads", express.static("uploads"))
 routes(app);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 7600;
 const server = http.createServer(app);
 server.listen(port, () => console.log(`App is listening on port ${port}!`));
 
