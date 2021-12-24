@@ -18,12 +18,13 @@ class userController {
   async updateUserInfo(req,res){
     try {
       const { phone , firstName , lastName } = req.body ;
-      const { _id } = req.user
+      const { _id } = req.user;
       const user = await  User.updateOne({_id},{
         $set:{
           phone,
           firstName,
-          lastName
+          lastName,
+          imageUrl:req.file.path
         }
       })
       res.json({
