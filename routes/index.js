@@ -6,6 +6,7 @@ const categoryRouter = require('./category/index');
 const countryRouter = require('./country');
 const languageRouter = require('./language');
 const auth = require('../middleware/auth');
+const movieRouter = require('./movie');
 module.exports = (app) => {
   app.use("/api/v1/auth/register", registerRouter);
   app.use("/api/v1/auth/login", loginRouter);
@@ -14,4 +15,5 @@ module.exports = (app) => {
   app.use("/api/v1/category", categoryRouter);
   app.use("/api/v1/country", countryRouter);
   app.use("/api/v1/language", languageRouter);
+  app.use("/api/v1/movie", movieRouter);
 };
