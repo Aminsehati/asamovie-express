@@ -1,5 +1,6 @@
 const movieModel = require('../../models/movie.model');
 const categoryModel = require('../../models/category.model');
+const countryModel = require('../../models/country.model');
 class movieController {
     async addMovie(req, res) {
         try {
@@ -38,7 +39,7 @@ class movieController {
     }
     async getMovieItems(req, res) {
         try {
-            const movie = await movieModel.find().select('-__v');
+            const movie = await movieModel.find().select('-__v -updatedAt -createdAt');
             res.json({
                 isSuccess: true,
                 data: {
@@ -64,12 +65,15 @@ class movieController {
                 imdb,
                 Summary,
                 description,
-                category
+                category,
+                countries
             } = req.body;
-            // const categoryItems = await categoryModel.find(category);
             const categoryItems = await categoryModel.find({
                 _id: category
-            });
+            }).select("-createdAt -updatedAt -__v");
+            const countriesItems = await countryModel.find({
+                _id : countries
+            }).select('-createdAt -updatedAt -__v')
             await movieModel.findOneAndUpdate({
                 _id: id
             }, {
@@ -78,16 +82,14 @@ class movieController {
                 year,
                 imdb,
                 Summary,
-                description
+                description,
+                category:categoryItems,
+                countries:countriesItems
             })
             res.json({
                 isSuccess: true,
-                categoryItems
+                message: "با موفقیت ثبت شد"
             })
-            // res.json({
-            //     isSuccess: true,
-            //     message: "با موفقیت ثبت شد"
-            // })
         } catch (error) {
             res.json({
                 isSuccess: false,

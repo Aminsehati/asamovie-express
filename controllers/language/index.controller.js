@@ -2,7 +2,7 @@ const languageModel = require('../../models/language.model');
 class languageController {
     async getLangauageItems(req, res) {
         try {
-            const languages = await languageModel.find().select("-__v");
+            const languages = await languageModel.find().select("-__v ");
             res.json({
                 isSuccess: true,
                 data: {

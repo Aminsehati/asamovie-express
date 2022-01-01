@@ -36,6 +36,10 @@ const movieSchema = new Schema({
     category:{
         type:Array,
         default:[]
+    },
+    countries:{
+        type:Array,
+        default:[]
     }
 }, {
     timestamps: true
