@@ -25,6 +25,14 @@ const movieSchema = new Schema({
         default:"",
         required:true,
     },
+    imageLogoMovie : {
+        type:String,
+        default:""
+    },
+    imageCoverMovie : {
+        type:String,
+        default:""
+    },
     Summary:{
         type:String,
         default:""
@@ -38,6 +46,10 @@ const movieSchema = new Schema({
         default:[]
     },
     countries:{
+        type:Array,
+        default:[]
+    },
+    actors:{
         type:Array,
         default:[]
     }

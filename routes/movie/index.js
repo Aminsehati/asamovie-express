@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/image');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + "-" + file.originalname);
+        cb(null, file.originalname);
     }
 });
 const upload = multer({
@@ -15,7 +15,13 @@ const upload = multer({
 const movieController = require('../../controllers/Movie/index.controller');
 router.post("/", upload.single("file"), movieController.addMovie);
 router.get("/", movieController.getMovieItems);
-router.put("/:id", movieController.updateMovieItem);
+router.put("/:id", upload.fields([{
+    name: "imageCoverMovie"
+}, {
+    name: "imageLogoMovie"
+}, {
+    name: "imageUrl"
+}]), movieController.updateMovieItem);
 router.get("/:id", movieController.getMovieItem);
 
 module.exports = router

@@ -6,7 +6,7 @@ class loginController {
     let {
       phone,
       password
-    } = req.query;
+    } = req.body;
     if (!phone | !password) {
       return res.status(400).json({
         isSuccess: false,
