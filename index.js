@@ -25,9 +25,8 @@ app.use(express.urlencoded({
 
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-// app.use("/uploads", express.static("uploads"))
-app.use("/uploads", express.static(path.join("uploads")))
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
+// app.use("/uploads", express.static(path.join("uploads")))
 // app.use("/uploads", express.static("uploads"))
 routes(app);
 
