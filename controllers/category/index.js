@@ -28,22 +28,11 @@ class categoryController {
     }
     async getCategoryItems(req, res) {
         try {
-            let {
-                skip = 1,
-                limit = 10
-            } = req.query;
-            if(!skip || !limit ){
-                skip = req.body.skip;
-                limit = req.body.limit;
-            }
-
             const categories = await categoryModel.find().select('-__v');
-            const filtersCategories = await categoryModel.find().select('-__v').limit(limit * 1).skip((skip - 1) * limit);
             res.json({
                 isSuccess: true,
                 data: {
-                    items: filtersCategories,
-                    tottalCount: categories.length
+                    items: categories,
                 }
             })
         } catch (error) {

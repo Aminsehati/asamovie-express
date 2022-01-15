@@ -1,5 +1,8 @@
 const movieModel = require('../../models/movie.model');
 const categoryModel = require('../../models/category.model');
+const countryModel = require('../../models/country.model');
+const actorsModel = require('../../models/actors.model');
+const { log } = require('npmlog');
 class movieController {
     async addMovie(req, res) {
         try {
@@ -38,7 +41,7 @@ class movieController {
     }
     async getMovieItems(req, res) {
         try {
-            const movie = await movieModel.find().select('-__v');
+            const movie = await movieModel.find().select('-__v -updatedAt -createdAt');
             res.json({
                 isSuccess: true,
                 data: {
@@ -64,12 +67,22 @@ class movieController {
                 imdb,
                 Summary,
                 description,
-                category
+                category,
+                countries ,
+                actors
             } = req.body;
-            // const categoryItems = await categoryModel.find(category);
-            const categoryItems = await categoryModel.find({
-                _id: category
+            const imageLogoMovie = req.files?.imageLogoMovie && req.files.imageLogoMovie[0].filename;
+            const imageCoverMovie = req.files?.imageCoverMovie && req.files.imageCoverMovie[0].filename;
+            const imageUrl = req.files?.imageUrl && req.files.imageUrl[0].filename ;
+            const categoryItems = category && await categoryModel.find({
+                _id: category && JSON.parse(category)
             });
+            const countriesItems = countries && await countryModel.find({
+                _id: countries && JSON.parse(countries)
+            }).select('-createdAt -updatedAt -__v');
+            const actorsItems = actors && await actorsModel.find({
+                _id : JSON.parse(actors)
+            }).select("-__v");
             await movieModel.findOneAndUpdate({
                 _id: id
             }, {
@@ -78,17 +91,20 @@ class movieController {
                 year,
                 imdb,
                 Summary,
-                description
+                description,
+                category: categoryItems,
+                countries: countriesItems,
+                imageLogoMovie,
+                imageCoverMovie,
+                imgUrl : imageUrl,
+                actors:actorsItems
             })
             res.json({
                 isSuccess: true,
-                categoryItems
+                message: "با موفقیت ثبت شد"
             })
-            // res.json({
-            //     isSuccess: true,
-            //     message: "با موفقیت ثبت شد"
-            // })
         } catch (error) {
+            console.log(error);
             res.json({
                 isSuccess: false,
                 message: "خطایی رخ داده است",
