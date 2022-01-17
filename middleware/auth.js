@@ -6,7 +6,6 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({
       isSuccess: false,
       message: "unauthorized",
-      authHeaders,
     });
   }
   try {
@@ -19,8 +18,7 @@ module.exports = async (req, res, next) => {
         firstName : user?.firstName ,
         lastName : user?.lastName,
         _id : user?._id ,
-        imageUrl:user?.imageUrl,
-        bookMark:user?.bookMark || []
+        imageUrl:user?.imageUrl
     }
     next();
   } catch (error) {
