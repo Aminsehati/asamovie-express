@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
         lastName : user?.lastName,
         _id : user?._id ,
         imageUrl:user?.imageUrl,
-        bookMark:user?.bookMark
+        bookMark:user?.bookMark || []
     }
     next();
   } catch (error) {
