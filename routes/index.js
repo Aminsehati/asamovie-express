@@ -1,6 +1,6 @@
 const registerRouter = require("./auth/register");
 const loginRouter = require("./auth/login");
-const userRouter = require('./user');
+const userRouter = require('./users');
 const sendOtp = require("./auth/send-otp");
 const categoryRouter = require('./category/index');
 const countryRouter = require('./country');
@@ -9,10 +9,12 @@ const auth = require('../middleware/auth');
 const movieRouter = require('./movie');
 const actorsRouter = require('./actors');
 const commnetRouter = require('./comment');
+const bookMarkRouter = require('./users/bookmark');
 module.exports = (app) => {
   app.use("/api/v1/auth/register", registerRouter);
   app.use("/api/v1/auth/login", loginRouter);
   app.use("/api/v1/account/user",auth , userRouter);
+  app.use("/api/v1/account/users/bookmark",auth , bookMarkRouter);
   app.use("/api/v1/send-otp", sendOtp);
   app.use("/api/v1/category", categoryRouter);
   app.use("/api/v1/country", countryRouter);

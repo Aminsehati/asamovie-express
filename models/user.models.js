@@ -20,7 +20,32 @@ const userSchema = new Schema({
     imageUrl: {
         type: String,
         default: ""
-    }
+    },
+    bookMark: [{
+        _id: {
+            type: Schema.Types.ObjectId
+        },
+        title: {
+            type: String,
+            default: ""
+        },
+        title_original: {
+            type: String,
+            default: ""
+        },
+        year: {
+            type: Number,
+            default: 2020
+        },
+        imdb: {
+            type: Number,
+            default: 0
+        },
+        imgUrl: {
+            type: String,
+            default: ""
+        }
+    }]
 }, {
     timestamps: true
 })
