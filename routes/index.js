@@ -13,7 +13,7 @@ const bookMarkRouter = require('./users/bookmark');
 module.exports = (app) => {
   app.use("/api/v1/auth/register", registerRouter);
   app.use("/api/v1/auth/login", loginRouter);
-  app.use("/api/v1/account/user",auth , userRouter);
+  app.use("/api/v1/account/users",auth , userRouter);
   app.use("/api/v1/account/users/bookmark",auth , bookMarkRouter);
   app.use("/api/v1/send-otp", sendOtp);
   app.use("/api/v1/category", categoryRouter);

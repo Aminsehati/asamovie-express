@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
   try {
     const token = authHeaders.split(" ")[1];
     const { _id } = await jwtService.verifyToken(token);
-    const user = await User.findOne({ _id }).exec();
+    const user = await User.findOne({ _id }).exec()
     req.user = {
         ...req.user,
         phone:user.phone,
@@ -25,6 +25,7 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({
       isSuccess: false,
       message: "unauthorized",
+      error
     });
   }
 };
