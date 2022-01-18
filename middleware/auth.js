@@ -11,7 +11,8 @@ module.exports = async (req, res, next) => {
   try {
     const token = authHeaders.split(" ")[1];
     const { _id } = await jwtService.verifyToken(token);
-    const user = await User.findOne({ _id }).exec()
+    const user = await User.findOne({ _id }).exec();
+    console.log(user);
     req.user = {
         ...req.user,
         phone:user.phone,
@@ -19,7 +20,7 @@ module.exports = async (req, res, next) => {
         lastName : user?.lastName,
         _id : user?._id ,
         imageUrl:user?.imageUrl,
-        bookMark : user?.bookMark
+        bookMark:user.bookMark || []
     }
     next();
   } catch (error) {

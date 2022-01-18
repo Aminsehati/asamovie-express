@@ -56,21 +56,17 @@ class bookmarkController {
             const {
                 id
             } = req.params;
-            const hashBookMark = await userModel.findOne({
-                bookMark: {
-                    $elemMatch: {
-                        _id: id
-                    }
-                }
-            })
+            const user = req.user;
+            const hashBookMark = user.bookMark.find(bookMark => bookMark._id === id);
             res.json({
                 isSuccess: true,
                 hashBookMark: !!hashBookMark
             })
         } catch (error) {
             res.status(400).json({
-                isSuccess: true,
-                message: "خطایی رخ داده است"
+                isSuccess: false,
+                message: "خطایی رخ داده است",
+                error
             })
         }
     }
