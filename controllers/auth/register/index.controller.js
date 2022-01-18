@@ -4,9 +4,10 @@ const hashServices = require("../../../services/hash-services");
 const jwtServices = require("../../../services/jwt-services");
 class registerController {
   async register(req, res) {
-    let { phone, password } = req.query ;
-    phone = req.body;
-    password = req.body;
+    const {
+      phone,
+      password
+    } = req.body;
     const phoneValidation = validation.phone(phone);
     if (!phone || !password) {
       return res.status(400).send({
@@ -18,10 +19,13 @@ class registerController {
       return res.status(400).send({
         isSuccess: false,
         message: "شماره وارد شده صحیح نمیباشد",
+        phoneValidation
       });
     }
     try {
-      const user = await User.findOne({ phone });
+      const user = await User.findOne({
+        phone
+      });
       if (user) {
         return res.status(400).send({
           isSuccess: false,
@@ -41,8 +45,10 @@ class registerController {
         password: hashPassword,
       });
       await newUser.save();
-      const token = await jwtServices.sign({ _id: newUser._id });
-       return res.send({
+      const token = await jwtServices.sign({
+        _id: newUser._id
+      });
+      return res.send({
         isSuccess: true,
         token,
       });

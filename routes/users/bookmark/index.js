@@ -4,4 +4,5 @@ const bookMarkController = require('../../../controllers/bookmark/index.controll
 router.post("/:id",bookMarkController.addToBookMark);
 router.get("/",bookMarkController.getBookMarkItems);
 router.get("/:id",bookMarkController.getBookMarkItem);
+router.delete("/:id",bookMarkController.deleteBookMark)
 module.exports = router ;
