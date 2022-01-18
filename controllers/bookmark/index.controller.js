@@ -39,7 +39,7 @@ class bookmarkController {
     }
     async getBookMarkItems(req, res) {
         try {
-            const bookMarkItems = await userModel.findOne().select("bookMark -_id")
+            const bookMarkItems = req.user.bookMark;
             res.json({
                 isSuccess: true,
                 bookMarkItems
@@ -71,6 +71,23 @@ class bookmarkController {
             res.status(400).json({
                 isSuccess: true,
                 message: "خطایی رخ داده است"
+            })
+        }
+    }
+    async deleteBookMark(req, res) {
+        try {
+            const {
+                id
+            } = req.params;
+            const user = req.user;
+            res.json({
+                isSuccess: true,
+                message: "با موفقیت حذف شد"
+            })
+        } catch (error) {
+            return res.status(400).json({
+                isSuccess: false,
+                message: "یافت نشد"
             })
         }
     }
