@@ -12,7 +12,6 @@ module.exports = async (req, res, next) => {
     const token = authHeaders.split(" ")[1];
     const { _id } = await jwtService.verifyToken(token);
     const user = await User.findOne({ _id }).exec();
-    console.log(user);
     req.user = {
         ...req.user,
         phone:user.phone,
