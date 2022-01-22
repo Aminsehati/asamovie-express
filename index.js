@@ -9,9 +9,7 @@ const path = require('path');
 const cors = require('cors');
 database();
 
-app.use(cors({
-    origin: "*",
-}))
+app.use(cors())
 
 dotenv.config();
 
