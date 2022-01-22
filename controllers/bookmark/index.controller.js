@@ -8,16 +8,14 @@ class bookmarkController {
             } = req.params;
             const mediaItem = await movieModel.findOne({
                 _id: id
-            }).select("_id title title_original year imdb imgUrl");
+            }).select("_id title title_original year imdb imgUrl category");
             const user = req.user;
-            const hasMediaToBookMark = await userModel.findOne({
-                bookMark: {
-                    $elemMatch: {
-                        _id: id
-                    }
-                }
-            })
-            if (!hasMediaToBookMark) {
+            const indexhasBookmark = user.bookMark.findIndex(item => item._id === id);
+            if (indexhasBookmark > -1) {
+                return res.status(400).json({
+                    isSuccess: false,
+                })
+            } else {
                 await userModel.findOneAndUpdate({
                     _id: user._id
                 }, {
@@ -25,10 +23,11 @@ class bookmarkController {
                         bookMark: mediaItem
                     }
                 })
+                console.log(mediaItem);
             }
             res.json({
                 isSuccess: true,
-                message: "با موفقیت ثبت شد"
+                message: "با موفقیت ثبت شد",
             })
         } catch (error) {
             return res.status(400).json({
@@ -57,7 +56,7 @@ class bookmarkController {
                 id
             } = req.params;
             const user = req.user;
-            const hashBookMark = user.bookMark.find(bookMark => bookMark._id === id);
+            const hashBookMark = user.bookMark.find(bookMark => bookMark._id.toString() === id);
             res.json({
                 isSuccess: true,
                 hashBookMark: !!hashBookMark
@@ -78,7 +77,6 @@ class bookmarkController {
             const user = req.user;
             res.json({
                 isSuccess: true,
-                message: "با موفقیت حذف شد"
             })
         } catch (error) {
             return res.status(400).json({
