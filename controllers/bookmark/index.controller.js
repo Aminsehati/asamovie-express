@@ -23,7 +23,6 @@ class bookmarkController {
                         bookMark: mediaItem
                     }
                 })
-                console.log(mediaItem);
             }
             res.json({
                 isSuccess: true,
@@ -75,13 +74,28 @@ class bookmarkController {
                 id
             } = req.params;
             const user = req.user;
-            res.json({
-                isSuccess: true,
-            })
+            let  bookmark = user.bookMark;
+            const indexBookMarkDelete = await bookmark.findIndex(bookMark => bookMark._id.toString() === id);
+            if (indexBookMarkDelete > -1) {
+                bookmark.splice(indexBookMarkDelete, 1);
+                await userModel.findOneAndUpdate({_id : user._id } , {
+                    bookMark:bookmark
+                })
+                res.json({
+                    isSuccess: true,
+                    message:"با موفقیت ثبت شد"
+                })
+            }else {
+                return res.status(400).json({
+                    isSuccess:false,
+                    message:"خطایی رخ داده است"
+                })
+            }
         } catch (error) {
             return res.status(400).json({
                 isSuccess: false,
-                message: "یافت نشد"
+                message: "یافت نشد",
+                error
             })
         }
     }

@@ -64,7 +64,6 @@ class commentController {
                 _id: id
             });
             const likeCount = commentItem.likeCount + 1 ;
-            console.log(likeCount);
             await commentModel.findOneAndUpdate({_id : id },{
                 likeCount
             })
