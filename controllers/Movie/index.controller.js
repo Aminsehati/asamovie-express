@@ -2,7 +2,6 @@ const movieModel = require('../../models/movie.model');
 const categoryModel = require('../../models/category.model');
 const countryModel = require('../../models/country.model');
 const actorsModel = require('../../models/actors.model');
-const { log } = require('npmlog');
 class movieController {
     async addMovie(req, res) {
         try {
@@ -12,7 +11,8 @@ class movieController {
                 imdb,
                 title_original
             } = req.body;
-            if (!title || !year || !imdb || !title_original) {
+            console.log(req.file);
+            if (!title || !year || !imdb || !title_original || !req.file || !req.file.filename) {
                 return res.json({
                     isSuccess: true,
                     message: "لطفا تمام فیلد ها را وارد کنید"
@@ -31,7 +31,6 @@ class movieController {
                 message: "با موفقیت ثبت شد"
             })
         } catch (error) {
-            console.log(error);
             res.status(400).json({
                 isSuccess: false,
                 message: "خطایی رخ داده است",
